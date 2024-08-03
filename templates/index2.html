@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remaining Useful Lifetime Of Battery</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1> Remaining Useful Lifetime Of Battery </h1>
+        <form id="predictForm">
+            <div class="form-group">
+                <label for="cycle_index">Cycle Index:</label>
+                <input type="number" id="cycle_index" name="cycle_index" required>
+            </div>
+            <div class="form-group">
+                <label for="voltage">Max. Voltage Dischar. (V):</label>
+                <input type="number" step="any" id="voltage" name="voltage" required>
+            </div>
+            <div class="form-group">
+                <label for="time_at_4_15v">Time at 4.15V (s):</label>
+                <input type="number" step="any" id="time_at_4_15v" name="time_at_4_15v" required>
+            </div>
+            <button type="submit">Predict</button>
+        </form>
+        <div id="result" class="result">
+            <!-- Prediction result will be displayed here -->
+        </div>
+    </div>
+    <script>
+        document.getElementById('predictForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                var resultDiv = document.getElementById('result');
+                if (data.error) {
+                    resultDiv.innerHTML = `<p class="error">${data.error}</p>`;
+                } else {
+                    resultDiv.innerHTML = `<p>Prediction: ${data.prediction.toFixed(2)} cycles remaining</p>`;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
