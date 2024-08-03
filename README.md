@@ -49,7 +49,8 @@ XGBoost Regressor
 LightGBM Regressor
 CatBoost Regressor
 
-RUL_Project_
+# RUL_Project_
+
 │   README.md
 │   
 │   RUL2.ipynb
