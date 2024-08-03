@@ -49,7 +49,7 @@ XGBoost Regressor
 LightGBM Regressor
 CatBoost Regressor
 
-# RUL_Project_
+# Flow chart
 
 │   README.md
 │   
